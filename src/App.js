@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { Button } from "@mui/material";
+import { useState } from "react";
+import "./App.css";
+import LoginForm from "./components/LoginForm";
+import Signup from "./components/Signup";
 
-function App() {
+const App = () => {
+  const [showLogin, setShowLogin] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
+  const handleLoginClick = () => {
+    setShowLogin(true);
+    setShowRegister(false);
+  };
+  const handleSingupClick = () => {
+    setShowRegister(true);
+    setShowLogin(false);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="main">
+      <div className="mainBtn">
+        <Button onClick={handleLoginClick}>Login</Button>
+        <Button onClick={handleSingupClick}>Signup</Button>
+      </div>
+      <div className="mainComponent">
+        {showLogin && <LoginForm />}
+        {showRegister && <Signup />}
+      </div>
     </div>
   );
-}
+};
 
 export default App;
