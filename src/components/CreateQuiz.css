@@ -1,4 +1,39 @@
+.modalDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: scroll;
+  overflow-y: scroll;
+  max-height: 70vh;
+  padding-top: 0px !important;
+}
+.title {
+  font-size: 20px !important;
+  font-weight: 500 !important;
+}
+.quizTitle {
+  width: 70%;
+}
+
 .publishBtn {
+  height: 50px;
   display: flex;
   justify-content: end;
+  align-items: center;
+}
+
+.addQuestionDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0px;
+  background: #fff;
+  z-index: 5;
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+
+.addQuestionBtn {
+  height: 40px;
 }

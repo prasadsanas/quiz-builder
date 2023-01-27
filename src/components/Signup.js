@@ -1,12 +1,10 @@
-import { Alert, Button, TextField, Typography } from "@mui/material";
-import React, { useRef, useState } from "react";
+import { Button, TextField, Typography } from "@mui/material";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
 import "./Form.css";
 
 const Signup = () => {
-  const [error, setError] = useState();
-  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -22,14 +20,11 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      setError("");
-      setLoading(true);
       await signup(email, password);
       navigate("/Dashboard");
     } catch {
-      setError("Failed to create an account");
+      console.log("Failed to create an account");
     }
-    setLoading(false);
   };
   return (
     <div id="signupForm">

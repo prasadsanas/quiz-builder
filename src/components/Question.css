@@ -1,0 +1,38 @@
+.questionMainDiv {
+  margin: 10px 0px;
+  border: 1px solid #f5efef;
+  padding: 10px 10px;
+}
+.inputQuestion,
+.inputOptions,
+.inputCorrectAnswer {
+  width: 100%;
+}
+.serialNo {
+  font-size: 16px;
+  width: 5%;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f2f1f1;
+  border-radius: 5px;
+}
+.questionFirstRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.questionType {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+}
+.questionTypeOption {
+  color: #9c9c9c;
+  font-size: 14px !important;
+}
+.correctAnswer {
+  margin-top: 10px;
+}

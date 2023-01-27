@@ -6,8 +6,6 @@ import "./Form.css";
 
 const LoginForm = () => {
   const { login } = useAuth();
-  const [error, setError] = useState();
-  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -22,14 +20,11 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
-      setError("");
-      setLoading(true);
       await login(email, password);
       navigate("/Dashboard");
     } catch {
-      setError("Failed to Login");
+      console.log("Failed to Login");
     }
-    setLoading(false);
   };
 
   return (
