@@ -24,15 +24,13 @@ export function AuthProvider({ children }) {
     auth.signOut();
   }
 
-  async function saveUser(payload) {
+  async function saveQuiz(payload) {
     try {
-      const subAdmin = await addDoc(collection(db, "SubAdmin"), {
-        Name: payload.Name,
-        Email: payload.Email,
-        Mobile: payload.Mobile,
-        Password: payload.Password,
+      const quiz = await addDoc(collection(db, "Quiz"), {
+        title: payload.title,
+        questions: payload.questions,
       });
-      return subAdmin.id;
+      return quiz.id;
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -51,7 +49,7 @@ export function AuthProvider({ children }) {
     signup,
     login,
     logout,
-    saveUser,
+    saveQuiz,
   };
   return (
     <AuthContext.Provider value={value}>

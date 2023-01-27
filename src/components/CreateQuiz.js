@@ -1,5 +1,6 @@
 import { Modal, Box, Button, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { useAuth } from "./contexts/AuthContext";
 import "./CreateQuiz.css";
 import Question from "./Question";
 
@@ -19,17 +20,16 @@ const CreateQuiz = (props) => {
   const [noOfQuestion, setNoOfQuestion] = useState([{ id: 1 }]);
   const [questionObject, setQuestionObject] = useState([]);
   const [count, setCount] = useState(1);
+  const [disabledPublishBtn, setDisabledPublishBtn] = useState(true);
+  const { saveQuiz } = useAuth();
   const [quizDetails, setQuizDetails] = useState({
     title: "",
     questions: [],
   });
 
-  const handlePublish = () => {
-    console.log("details", quizDetails);
-    setQuizDetails({
-      ...quizDetails,
-      questions: [...quizDetails.questions, questionObject],
-    });
+  const handlePublish = async () => {
+    let payload = quizDetails;
+    await saveQuiz(payload);
     setNoOfQuestion([{ id: 1 }]);
     setCount(1);
     props.onClose();
@@ -38,7 +38,13 @@ const CreateQuiz = (props) => {
       questions: [],
     });
   };
-
+  const handleSave = () => {
+    setQuizDetails({
+      ...quizDetails,
+      questions: [...quizDetails.questions, questionObject],
+    });
+    setDisabledPublishBtn(false);
+  };
   const handleAddQuestion = () => {
     setQuizDetails({
       ...quizDetails,
@@ -72,6 +78,7 @@ const CreateQuiz = (props) => {
               label="Enter your question"
               variant="outlined"
               onBlur={handleTitleChange}
+              required
             ></TextField>
             <Button
               className="addQuestionBtn"
@@ -93,7 +100,18 @@ const CreateQuiz = (props) => {
             })}
           </div>
           <div className="publishBtn">
-            <Button variant="contained" onClick={handlePublish}>
+            <Button
+              variant="contained"
+              onClick={handleSave}
+              disabled={!disabledPublishBtn}
+            >
+              Save
+            </Button>
+            <Button
+              variant="contained"
+              onClick={handlePublish}
+              disabled={disabledPublishBtn}
+            >
               Publish
             </Button>
           </div>

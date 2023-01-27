@@ -64,6 +64,7 @@ const Question = (props) => {
           label="Enter your question"
           variant="outlined"
           onChange={handleQuestionChange}
+          required
         ></TextField>
       </div>
       <div className="questionType">
@@ -81,6 +82,7 @@ const Question = (props) => {
           label="Enter all options separated with commas"
           variant="outlined"
           onChange={handleOptionChange}
+          required
         ></TextField>
       </div>
       <div className="correctAnswer">
@@ -89,6 +91,7 @@ const Question = (props) => {
           label="Enter all correct options separated with commas"
           variant="outlined"
           onChange={handleCorrectAnswerChange}
+          required
         ></TextField>
       </div>
     </div>

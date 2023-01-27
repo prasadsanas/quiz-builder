@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
 import CreateQuiz from "./CreateQuiz";
 import "./HomePage.css";
+import Quiz from "./Quiz";
 const HomePage = () => {
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
@@ -22,6 +23,43 @@ const HomePage = () => {
       console.log("Failed to Logout");
     }
   };
+
+  const quizList = [
+    {
+      title: "1st quiz",
+      questions: [
+        {
+          question: "How are you?",
+          questionType: "MCQ",
+          answerOption: ["Good", "Bad", "Okay"],
+          correctAnswer: ["Good"],
+        },
+        {
+          question: "Where do you visited?",
+          questionType: "Multiple",
+          answerOption: ["Mumbai", "Pune", "Goa"],
+          correctAnswer: ["Mumbai", "Pune"],
+        },
+      ],
+    },
+    {
+      title: "2nd quiz",
+      questions: [
+        {
+          question: "How are you?",
+          questionType: "Multiple",
+          answerOption: ["Good", "Bad", "Okay"],
+          correctAnswer: ["Good", "Okay"],
+        },
+        {
+          question: "Where do you visited?",
+          questionType: "Multiple",
+          answerOption: ["Mumbai", "Pune", "Goa"],
+          correctAnswer: ["Mumbai", "Pune"],
+        },
+      ],
+    },
+  ];
   return (
     <div id="home">
       <div className="homeLeft">
@@ -40,7 +78,11 @@ const HomePage = () => {
         {openModal && (
           <CreateQuiz openModal={openModal} onClose={handleCloseModal} />
         )}
-        <div className="allQuiz"></div>
+        <div className="allQuiz">
+          {quizList.map((el, index) => {
+            return <Quiz item={el} key={index} />;
+          })}
+        </div>
       </div>
     </div>
   );
