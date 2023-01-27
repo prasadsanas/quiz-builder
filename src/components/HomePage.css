@@ -1,0 +1,25 @@
+#home {
+  width: 90vw;
+  height: 80vh;
+  display: flex;
+  justify-content: space-between;
+}
+
+.homeLeft {
+  width: 30%;
+  border: 1px solid #c1c1c1;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.homeRight {
+  width: 65%;
+  border: 1px solid #c1c1c1;
+  border-radius: 5px;
+}
+
+.createQuizBtn {
+  display: flex;
+  justify-content: end;
+}
