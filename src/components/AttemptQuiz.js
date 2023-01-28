@@ -2,7 +2,6 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
-  FormGroup,
   Radio,
   RadioGroup,
   TextField,
@@ -21,58 +20,77 @@ const AttemptQuiz = () => {
         questionType: "MCQ",
         answerOption: ["Good", "Bad", "Okay"],
         correctAnswer: ["Good"],
+        checkedOptions: [],
       },
       {
         question: "Where do you visited?",
         questionType: "Multiple",
         answerOption: ["Mumbai", "Pune", "Goa"],
         correctAnswer: ["Mumbai", "Pune"],
+        checkedOptions: [],
       },
       {
         question: "How are you?",
         questionType: "Multiple",
         answerOption: ["Good", "Bad", "Okay", "Sad"],
         correctAnswer: ["Good", "Okay"],
+        checkedOptions: [],
       },
       {
         question: "Where do you visited?",
         questionType: "Multiple",
         answerOption: ["Mumbai", "Pune", "Goa"],
         correctAnswer: ["Mumbai", "Pune"],
+        checkedOptions: [],
       },
     ],
   };
 
   const [correctAnswerDisplay, setCorrectAnswerDisplay] = useState(false);
   const [radioValue, setRadioValue] = useState("");
-  const [checked, setChecked] = React.useState([
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
 
-  const handleCheckboxChange = (index) => {};
+  const handleCheckboxChange = (event, el, qno) => {
+    // console.log(el, index, qno, event.target.checked, event);
+    if (event.target.checked) {
+      quizList.questions[qno].checkedOptions.push(el);
+    } else {
+      console.log("false");
+      var idx = quizList.questions[qno].checkedOptions.indexOf(el);
+      if (idx > -1) {
+        quizList.questions[qno].checkedOptions.splice(idx, 1);
+      }
+    }
+  };
 
   const handleAnswerSubmit = () => {
     console.log("clicked");
     setCorrectAnswerDisplay(true);
   };
 
-  const handleRadioChange = (event) => {
+  const handleRadioChange = (event, el, qno) => {
     setRadioValue(event.target.value);
+    if (event.target.checked) {
+      quizList.questions[qno].checkedOptions.push(el);
+    } else {
+      console.log("false");
+      var idx = quizList.questions[qno].checkedOptions.indexOf(el);
+      if (idx > -1) {
+        quizList.questions[qno].checkedOptions.splice(idx, 1);
+      }
+    }
+
+    console.log(quizList.questions[qno].checkedOptions);
   };
 
   return (
     <div className="attemptQuizMain">
       <h3 className="attemptQuizTitle">Title - {quizList.title}</h3>
       <div className="attemptQuizQuestions">
-        {quizList.questions.map((el, index) => {
+        {quizList.questions.map((el, qno) => {
           return (
-            <div className="viewQuizQuestionDiv" key={index}>
+            <div className="viewQuizQuestionDiv" key={qno}>
               <Typography>
-                <span className="viewQuizText">Question {index + 1} - </span>
+                <span className="viewQuizText">Question {qno + 1} - </span>
                 {el.question}
               </Typography>
               <Typography>
@@ -89,9 +107,12 @@ const AttemptQuiz = () => {
                       label={el}
                       control={
                         <Checkbox
+                          name={el}
+                          id={el}
                           key={index}
-                          checked={true}
-                          onChange={() => handleCheckboxChange(index)}
+                          onChange={(event) =>
+                            handleCheckboxChange(event, el, index, qno)
+                          }
                           disabled={correctAnswerDisplay}
                         />
                       }
@@ -104,7 +125,9 @@ const AttemptQuiz = () => {
                     <RadioGroup
                       key={index}
                       value={radioValue}
-                      onChange={handleRadioChange}
+                      onChange={(event) =>
+                        handleRadioChange(event, el, index, qno)
+                      }
                     >
                       <FormControlLabel
                         key={index}
