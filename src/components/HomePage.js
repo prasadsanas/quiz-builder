@@ -27,6 +27,7 @@ const HomePage = () => {
   const quizList = [
     {
       title: "1st quiz",
+      permalinks: "AQSWDE",
       questions: [
         {
           question: "How are you?",
@@ -44,11 +45,12 @@ const HomePage = () => {
     },
     {
       title: "2nd quiz",
+      permalinks: "EDRFTG",
       questions: [
         {
           question: "How are you?",
           questionType: "Multiple",
-          answerOption: ["Good", "Bad", "Okay"],
+          answerOption: ["Good", "Bad", "Okay", "Sad"],
           correctAnswer: ["Good", "Okay"],
         },
         {

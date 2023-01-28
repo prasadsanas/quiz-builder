@@ -1,4 +1,5 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Switch } from "react-router-dom";
+import AttemptQuiz from "../components/AttemptQuiz";
 import { AuthProvider } from "../components/contexts/AuthContext";
 import DashboardPage from "../screens/Dashboard/DashboardPage";
 import LoginPage from "../screens/LoginPage/LoginPage";
@@ -11,7 +12,8 @@ const AppRouter = () => {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<LoginPage />} exact />
-          <Route path="/Signup" element={<RegisterPage />} exact />
+          <Route path="/Signup" element={<RegisterPage />} />
+          <Route path="/Quiz/:permalinks" element={<AttemptQuiz />} />
           <Route element={<PrivateRoutes />}>
             <Route path="/Dashboard" element={<DashboardPage />} />
           </Route>

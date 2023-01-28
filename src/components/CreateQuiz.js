@@ -34,17 +34,28 @@ const CreateQuiz = (props) => {
     setCount(1);
     props.onClose();
     setQuizDetails({
+      permalinks: "",
       title: "",
       questions: [],
     });
   };
   const handleSave = () => {
+    let result = "";
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < 6) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      counter += 1;
+    }
     setQuizDetails({
       ...quizDetails,
       questions: [...quizDetails.questions, questionObject],
+      permalinks: result,
     });
     setDisabledPublishBtn(false);
   };
+  console.log(quizDetails);
   const handleAddQuestion = () => {
     setQuizDetails({
       ...quizDetails,

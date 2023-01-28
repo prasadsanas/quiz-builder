@@ -27,9 +27,11 @@ export function AuthProvider({ children }) {
   async function saveQuiz(payload) {
     try {
       const quiz = await addDoc(collection(db, "Quiz"), {
+        permalinks: payload.permalinks,
         title: payload.title,
         questions: payload.questions,
       });
+
       return quiz.id;
     } catch (e) {
       console.error("Error adding document: ", e);
