@@ -11,7 +11,7 @@ import React, { useState } from "react";
 import "./AttemptQuiz.css";
 
 const AttemptQuiz = () => {
-  const quizList = {
+  const [quizList, setQuizList] = useState({
     title: "1st quiz",
     permalinks: "AQSWDE",
     questions: [
@@ -44,42 +44,79 @@ const AttemptQuiz = () => {
         checkedOptions: [],
       },
     ],
-  };
-
+  });
   const [correctAnswerDisplay, setCorrectAnswerDisplay] = useState(false);
   const [radioValue, setRadioValue] = useState("");
 
   const handleCheckboxChange = (event, el, qno) => {
-    // console.log(el, index, qno, event.target.checked, event);
+    let temp = [];
+    let tempQuizList = {};
     if (event.target.checked) {
-      quizList.questions[qno].checkedOptions.push(el);
+      //   quizList.questions[qno].checkedOptions.push(el);
+      temp = quizList.questions;
+      temp[qno].checkedOptions.push(el);
+      tempQuizList = {
+        ...quizList,
+        questions: temp,
+      };
+      setQuizList(tempQuizList);
     } else {
-      console.log("false");
       var idx = quizList.questions[qno].checkedOptions.indexOf(el);
       if (idx > -1) {
-        quizList.questions[qno].checkedOptions.splice(idx, 1);
+        // quizList.questions[qno].checkedOptions.splice(idx, 1);
+        temp = quizList.questions;
+        temp[qno].checkedOptions.splice(idx, 1);
+        tempQuizList = {
+          ...quizList,
+          questions: temp,
+        };
+        setQuizList(tempQuizList);
+        // setQuizList({
+        //   ...quizList,
+        //   questions: [
+        //     ...quizList.questions,
+        //     quizList.questions[qno].checkedOptions.splice(idx, 1),
+        //   ],
+        // });
       }
     }
-  };
-
-  const handleAnswerSubmit = () => {
-    console.log("clicked");
-    setCorrectAnswerDisplay(true);
   };
 
   const handleRadioChange = (event, el, qno) => {
     setRadioValue(event.target.value);
+    let temp = [];
+    let tempQuizList = {};
     if (event.target.checked) {
-      quizList.questions[qno].checkedOptions.push(el);
-    } else {
-      console.log("false");
-      var idx = quizList.questions[qno].checkedOptions.indexOf(el);
-      if (idx > -1) {
-        quizList.questions[qno].checkedOptions.splice(idx, 1);
-      }
+      //   quizList.questions[qno].checkedOptions.push(el);
+      temp = quizList.questions;
+      temp[qno].checkedOptions = [el];
+      tempQuizList = {
+        ...quizList,
+        questions: temp,
+      };
+      setQuizList(tempQuizList);
+      //   setQuizList({
+      //     ...quizList,
+      //     questions: [
+      //       ...quizList.questions,
+      //       quizList.questions[qno].checkedOptions.push(el),
+      //     ],
+      //   });
     }
+  };
 
-    console.log(quizList.questions[qno].checkedOptions);
+  const handleAnswerSubmit = () => {
+    let totalCorrectAnswer = 0;
+    quizList.questions.forEach((val) => {
+      if (
+        JSON.stringify(val.correctAnswer) === JSON.stringify(val.checkedOptions)
+      ) {
+        totalCorrectAnswer++;
+      }
+    });
+
+    console.log("correct answer", totalCorrectAnswer);
+    setCorrectAnswerDisplay(true);
   };
 
   return (
@@ -111,7 +148,7 @@ const AttemptQuiz = () => {
                           id={el}
                           key={index}
                           onChange={(event) =>
-                            handleCheckboxChange(event, el, index, qno)
+                            handleCheckboxChange(event, el, qno)
                           }
                           disabled={correctAnswerDisplay}
                         />
@@ -125,9 +162,7 @@ const AttemptQuiz = () => {
                     <RadioGroup
                       key={index}
                       value={radioValue}
-                      onChange={(event) =>
-                        handleRadioChange(event, el, index, qno)
-                      }
+                      onChange={(event) => handleRadioChange(event, el, qno)}
                     >
                       <FormControlLabel
                         key={index}
@@ -146,9 +181,10 @@ const AttemptQuiz = () => {
                 </Typography>
               )}
               {correctAnswerDisplay &&
-                el?.correctAnswer?.map((el) => {
+                el?.correctAnswer?.map((el, index) => {
                   return (
                     <TextField
+                      key={index}
                       className="attemptQuizTextField correctAnswer"
                       label={el}
                       disabled
