@@ -66,6 +66,7 @@ const Question = (props) => {
           variant="outlined"
           onChange={handleQuestionChange}
           required
+          disabled={props.disabled}
         ></TextField>
       </div>
       <div className="questionType">
@@ -74,6 +75,7 @@ const Question = (props) => {
           size="small"
           color="secondary"
           onChange={handleQuestionType}
+          disabled={props.disabled}
         ></Switch>
         <Typography className="questionTypeOption">Multiple Answers</Typography>
       </div>
@@ -84,6 +86,7 @@ const Question = (props) => {
           variant="outlined"
           onChange={handleOptionChange}
           required
+          disabled={props.disabled}
         ></TextField>
       </div>
       <div className="correctAnswer">
@@ -92,6 +95,7 @@ const Question = (props) => {
           label="Enter all correct options separated with commas"
           variant="outlined"
           onChange={handleCorrectAnswerChange}
+          disabled={props.disabled}
           required
         ></TextField>
       </div>

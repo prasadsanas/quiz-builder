@@ -81,13 +81,12 @@ const HomePage = () => {
   // ];
   return (
     <div id="home">
-      <div className="homeLeft">
-        <div className="logoutBtnDiv">
-          <Button onClick={handleLogout} className="logoutBtn">
-            Log out
-          </Button>
-        </div>
+      <div className="logoutBtnDiv">
+        <Button onClick={handleLogout} className="logoutBtn">
+          Log out
+        </Button>
       </div>
+
       <div className="homeRight">
         <div className="createQuizBtnDiv">
           <Button className="createQuizBtn" onClick={handleOpenModal}>

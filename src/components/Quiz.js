@@ -18,8 +18,10 @@ const Quiz = (props) => {
     navigate(`/Quiz/${item.permalinks}`, { state: { item } });
   };
   const handleCopyLink = (item) => {
-    let url = `http://localhost:3000/Quiz/${item.permalinks}`;
-    navigator.clipboard.writeText(url);
+    let url = window.location.href;
+    let domain = new URL(url);
+    domain = `${domain.hostname}/Quiz/${item.permalinks}`;
+    navigator.clipboard.writeText(domain);
   };
   const handleDelete = async (item) => {
     await deleteQuiz(item.permalinks);
