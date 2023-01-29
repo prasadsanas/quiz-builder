@@ -10,10 +10,13 @@
   border: 1px solid #2f80a8;
   border-radius: 5px;
   cursor: pointer;
+  background: #cad6fd;
 }
 
 .quizTitle {
   width: 70%;
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .quizLink {
@@ -24,11 +27,20 @@
 }
 
 .attemptQuizText {
-  color: rgb(23, 125, 0);
+  background: rgb(23, 125, 0);
+  color: #fff !important;
+  padding: 10px 20px;
+  border-radius: 4px;
 }
 .copyLinkQuizText {
-  color: rgb(144, 0, 183);
+  background: rgb(125 65 141);
+  color: #fff !important;
+  padding: 10px 20px;
+  border-radius: 4px;
 }
 .deleteQuizText {
-  color: red;
+  background: red;
+  color: #fff !important;
+  padding: 10px 20px;
+  border-radius: 4px;
 }

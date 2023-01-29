@@ -14,6 +14,7 @@
   height: 100vh;
   border-right: 1px solid #c1c1c1;
   padding: 10px 15px;
+  background: #e9e9e9;
 }
 
 .allQuizDiv {
@@ -25,10 +26,10 @@
   align-items: center;
   justify-content: space-between;
   border-radius: 5px;
+  background: #fff;
 }
 
 .attemptQuizText {
   color: rgb(23, 125, 0);
   cursor: pointer;
-  text-decoration: underline;
 }
