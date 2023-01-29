@@ -27,8 +27,6 @@ const style = {
 };
 
 const AttemptQuiz = (props) => {
-  //   const { state } = useLocation();
-  //   const { item } = state;
   let { permalinks } = useParams();
 
   const [quizList, setQuizList] = useState([]);

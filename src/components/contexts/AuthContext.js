@@ -76,6 +76,16 @@ export function AuthProvider({ children }) {
     return result;
   }
 
+  async function getAllQuizAnonymous() {
+    const quizRef = collection(db, "Quiz");
+    const docsSnap = await getDocs(quizRef);
+    let result = [];
+    docsSnap.forEach((doc) => {
+      result.push(doc.data());
+    });
+    return result;
+  }
+
   async function getSpecificQuiz(perma) {
     const quizRef = collection(db, "Quiz");
     const docsSnap = await getDocs(quizRef);
@@ -105,6 +115,7 @@ export function AuthProvider({ children }) {
     getAllQuiz,
     getSpecificQuiz,
     deleteQuiz,
+    getAllQuizAnonymous,
   };
   return (
     <AuthContext.Provider value={value}>
