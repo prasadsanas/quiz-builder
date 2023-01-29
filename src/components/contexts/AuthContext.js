@@ -1,6 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { auth, db } from "../../../src/config/firebase";
-import { collection, addDoc, getDocs, doc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  getDoc,
+  deleteDoc,
+  setDoc,
+} from "firebase/firestore";
 
 const AuthContext = React.createContext();
 
@@ -24,9 +32,14 @@ export function AuthProvider({ children }) {
     auth.signOut();
   }
 
+  async function deleteQuiz(perma) {
+    await deleteDoc(doc(db, "Quiz", perma));
+    await deleteDoc(doc(db, currentUser.email, perma));
+  }
+
   async function saveQuiz(payload) {
     try {
-      const quiz = await addDoc(collection(db, currentUser.email), {
+      await setDoc(doc(db, currentUser.email, payload.permalinks), {
         permalinks: payload.permalinks,
         title: payload.title,
         questions: payload.questions,
@@ -34,7 +47,6 @@ export function AuthProvider({ children }) {
         uid: currentUser.uid,
       });
       saveAllQuiz(payload);
-      return quiz.id;
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -42,15 +54,13 @@ export function AuthProvider({ children }) {
 
   async function saveAllQuiz(payload) {
     try {
-      const quiz = await addDoc(collection(db, "Quiz"), {
+      await setDoc(doc(db, "Quiz", payload.permalinks), {
         permalinks: payload.permalinks,
         title: payload.title,
         questions: payload.questions,
         email: currentUser.email,
         uid: currentUser.uid,
       });
-
-      return quiz.id;
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -95,6 +105,7 @@ export function AuthProvider({ children }) {
     saveQuiz,
     getAllQuiz,
     getSpecificQuiz,
+    deleteQuiz,
   };
   return (
     <AuthContext.Provider value={value}>

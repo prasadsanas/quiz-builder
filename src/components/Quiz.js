@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./contexts/AuthContext";
 import "./Quiz.css";
 import ViewQuiz from "./ViewQuiz";
 
 const Quiz = (props) => {
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
-
+  const { deleteQuiz } = useAuth();
   const handleOpenModal = () => {
     setOpenModal(true);
   };
@@ -20,8 +21,9 @@ const Quiz = (props) => {
     let url = `http://localhost:3000/Quiz/${item.permalinks}`;
     navigator.clipboard.writeText(url);
   };
-  const handleDelete = (item) => {
-    console.log("Deleted", item);
+  const handleDelete = async (item) => {
+    await deleteQuiz(item.permalinks);
+    props.refreshList(1);
   };
   return (
     <div className="quizMain">

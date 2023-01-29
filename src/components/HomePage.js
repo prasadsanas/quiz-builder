@@ -25,13 +25,21 @@ const HomePage = () => {
   };
 
   const [quizList, setQuizList] = useState([]);
+  const [refreshList, setRefreshList] = useState(0);
+  function refreshListFn() {
+    if (refreshList == 1) {
+      setRefreshList(0);
+    } else {
+      setRefreshList(1);
+    }
+  }
   useEffect(() => {
     async function getQuiz() {
       let list = await getAllQuiz();
       setQuizList(list);
     }
     getQuiz();
-  }, [openModal]);
+  }, [openModal, refreshList]);
 
   // const quizList = [
   //   {
@@ -91,7 +99,7 @@ const HomePage = () => {
         )}
         <div className="allQuiz">
           {quizList.map((el, index) => {
-            return <Quiz item={el} key={index} />;
+            return <Quiz item={el} key={index} refreshList={refreshListFn} />;
           })}
         </div>
       </div>
