@@ -40,9 +40,24 @@ const Quiz = (props) => {
         />
       )}
       <div className="quizLink">
-        <div onClick={() => handleAttemptQuiz(props.item)}>Attempt Quiz</div>
-        <div onClick={() => handleCopyLink(props.item)}>Copy Link</div>
-        <div onClick={() => handleDelete(props.item)}>Delete</div>
+        <div
+          className="attemptQuizText"
+          onClick={() => handleAttemptQuiz(props.item)}
+        >
+          Attempt Quiz
+        </div>
+        <div
+          className="copyLinkQuizText"
+          onClick={() => handleCopyLink(props.item)}
+        >
+          Copy Link
+        </div>
+        <div
+          className="deleteQuizText"
+          onClick={() => handleDelete(props.item)}
+        >
+          Delete
+        </div>
       </div>
     </div>
   );

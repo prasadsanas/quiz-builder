@@ -41,44 +41,6 @@ const HomePage = () => {
     getQuiz();
   }, [openModal, refreshList]);
 
-  // const quizList = [
-  //   {
-  //     title: "1st quiz",
-  //     permalinks: "AQSWDE",
-  //     questions: [
-  //       {
-  //         question: "How are you?",
-  //         questionType: "MCQ",
-  //         answerOption: ["Good", "Bad", "Okay"],
-  //         correctAnswer: ["Good"],
-  //       },
-  //       {
-  //         question: "Where do you visited?",
-  //         questionType: "Multiple",
-  //         answerOption: ["Mumbai", "Pune", "Goa"],
-  //         correctAnswer: ["Mumbai", "Pune"],
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     title: "2nd quiz",
-  //     permalinks: "EDRFTG",
-  //     questions: [
-  //       {
-  //         question: "How are you?",
-  //         questionType: "Multiple",
-  //         answerOption: ["Good", "Bad", "Okay", "Sad"],
-  //         correctAnswer: ["Good", "Okay"],
-  //       },
-  //       {
-  //         question: "Where do you visited?",
-  //         questionType: "Multiple",
-  //         answerOption: ["Mumbai", "Pune", "Goa"],
-  //         correctAnswer: ["Mumbai", "Pune"],
-  //       },
-  //     ],
-  //   },
-  // ];
   return (
     <div id="home">
       <div className="logoutBtnDiv">

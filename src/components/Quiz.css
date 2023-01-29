@@ -22,3 +22,13 @@
   align-items: center;
   width: 30%;
 }
+
+.attemptQuizText {
+  color: rgb(23, 125, 0);
+}
+.copyLinkQuizText {
+  color: rgb(144, 0, 183);
+}
+.deleteQuizText {
+  color: red;
+}

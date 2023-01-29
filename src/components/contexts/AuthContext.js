@@ -81,7 +81,6 @@ export function AuthProvider({ children }) {
     const docsSnap = await getDocs(quizRef);
     let result = [];
     docsSnap.forEach((doc) => {
-      console.log(doc.data().permalinks, perma);
       if (doc.data().permalinks === perma) {
         result.push(doc.data());
       }

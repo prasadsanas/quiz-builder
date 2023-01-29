@@ -30,7 +30,6 @@ const AttemptQuiz = (props) => {
   //   const { state } = useLocation();
   //   const { item } = state;
   let { permalinks } = useParams();
-  console.log(permalinks);
 
   const [quizList, setQuizList] = useState([]);
   const { getSpecificQuiz } = useAuth();
@@ -38,7 +37,7 @@ const AttemptQuiz = (props) => {
   useEffect(() => {
     async function getQuiz() {
       let quiz = await getSpecificQuiz(permalinks);
-      console.log(quiz[0]);
+
       setQuizList(quiz[0]);
     }
     getQuiz();
@@ -165,13 +164,19 @@ const AttemptQuiz = (props) => {
                   return (
                     <RadioGroup
                       key={index}
-                      value={radioValue}
+                      value={el}
                       onChange={(event) => handleRadioChange(event, el, qno)}
                     >
                       <FormControlLabel
                         key={index}
                         value={el}
-                        control={<Radio />}
+                        control={
+                          <Radio
+                            checked={quizList.questions[
+                              qno
+                            ].checkedOptions.includes(el)}
+                          />
+                        }
                         label={el}
                         disabled={correctAnswerDisplay}
                       />
