@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { auth, db } from "../../../src/config/firebase";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs, doc, getDoc } from "firebase/firestore";
 
 const AuthContext = React.createContext();
 
@@ -26,16 +26,57 @@ export function AuthProvider({ children }) {
 
   async function saveQuiz(payload) {
     try {
+      const quiz = await addDoc(collection(db, currentUser.email), {
+        permalinks: payload.permalinks,
+        title: payload.title,
+        questions: payload.questions,
+        email: currentUser.email,
+        uid: currentUser.uid,
+      });
+      saveAllQuiz(payload);
+      return quiz.id;
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  }
+
+  async function saveAllQuiz(payload) {
+    try {
       const quiz = await addDoc(collection(db, "Quiz"), {
         permalinks: payload.permalinks,
         title: payload.title,
         questions: payload.questions,
+        email: currentUser.email,
+        uid: currentUser.uid,
       });
 
       return quiz.id;
     } catch (e) {
       console.error("Error adding document: ", e);
     }
+  }
+
+  async function getAllQuiz() {
+    const quizRef = collection(db, currentUser.email);
+    const docsSnap = await getDocs(quizRef);
+    let result = [];
+    docsSnap.forEach((doc) => {
+      result.push(doc.data());
+    });
+    return result;
+  }
+
+  async function getSpecificQuiz(perma) {
+    const quizRef = collection(db, "Quiz");
+    const docsSnap = await getDocs(quizRef);
+    let result = [];
+    docsSnap.forEach((doc) => {
+      console.log(doc.data().permalinks, perma);
+      if (doc.data().permalinks === perma) {
+        result.push(doc.data());
+      }
+    });
+    return result;
   }
 
   useEffect(() => {
@@ -52,6 +93,8 @@ export function AuthProvider({ children }) {
     login,
     logout,
     saveQuiz,
+    getAllQuiz,
+    getSpecificQuiz,
   };
   return (
     <AuthContext.Provider value={value}>

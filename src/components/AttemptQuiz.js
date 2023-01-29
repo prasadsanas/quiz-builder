@@ -1,52 +1,53 @@
 import {
+  Box,
   Button,
   Checkbox,
   FormControlLabel,
+  Modal,
   Radio,
   RadioGroup,
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import "./AttemptQuiz.css";
+import { useAuth } from "./contexts/AuthContext";
 
-const AttemptQuiz = () => {
-  const [quizList, setQuizList] = useState({
-    title: "1st quiz",
-    permalinks: "AQSWDE",
-    questions: [
-      {
-        question: "How are you?",
-        questionType: "MCQ",
-        answerOption: ["Good", "Bad", "Okay"],
-        correctAnswer: ["Good"],
-        checkedOptions: [],
-      },
-      {
-        question: "Where do you visited?",
-        questionType: "Multiple",
-        answerOption: ["Mumbai", "Pune", "Goa"],
-        correctAnswer: ["Mumbai", "Pune"],
-        checkedOptions: [],
-      },
-      {
-        question: "How are you?",
-        questionType: "Multiple",
-        answerOption: ["Good", "Bad", "Okay", "Sad"],
-        correctAnswer: ["Good", "Okay"],
-        checkedOptions: [],
-      },
-      {
-        question: "Where do you visited?",
-        questionType: "Multiple",
-        answerOption: ["Mumbai", "Pune", "Goa"],
-        correctAnswer: ["Mumbai", "Pune"],
-        checkedOptions: [],
-      },
-    ],
-  });
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "50vw",
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
+const AttemptQuiz = (props) => {
+  //   const { state } = useLocation();
+  //   const { item } = state;
+  let { permalinks } = useParams();
+  console.log(permalinks);
+
+  const [quizList, setQuizList] = useState([]);
+  const { getSpecificQuiz } = useAuth();
+
+  useEffect(() => {
+    async function getQuiz() {
+      let quiz = await getSpecificQuiz(permalinks);
+      console.log(quiz[0]);
+      setQuizList(quiz[0]);
+    }
+    getQuiz();
+  }, [permalinks]);
+
   const [correctAnswerDisplay, setCorrectAnswerDisplay] = useState(false);
   const [radioValue, setRadioValue] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+  const [rightAnswer, setRightAnswer] = useState(0);
 
   const handleCheckboxChange = (event, el, qno) => {
     let temp = [];
@@ -114,16 +115,19 @@ const AttemptQuiz = () => {
         totalCorrectAnswer++;
       }
     });
-
-    console.log("correct answer", totalCorrectAnswer);
+    setRightAnswer(totalCorrectAnswer);
     setCorrectAnswerDisplay(true);
+    setOpenModal(true);
   };
 
+  const handleCloseScoreModal = () => {
+    setOpenModal(false);
+  };
   return (
     <div className="attemptQuizMain">
       <h3 className="attemptQuizTitle">Title - {quizList.title}</h3>
       <div className="attemptQuizQuestions">
-        {quizList.questions.map((el, qno) => {
+        {quizList?.questions?.map((el, qno) => {
           return (
             <div className="viewQuizQuestionDiv" key={qno}>
               <Typography>
@@ -195,6 +199,16 @@ const AttemptQuiz = () => {
           );
         })}
       </div>
+
+      <Modal id="scoreModal" open={openModal} onClose={handleCloseScoreModal}>
+        <Box sx={style} className="scoreModalDiv">
+          <div className="scoreStatement">
+            You answered {rightAnswer} / {quizList?.questions?.length} questions
+            correctly.
+          </div>
+        </Box>
+      </Modal>
+
       <div className="attemptQuizFooter">
         <Button
           className="submitBtn"

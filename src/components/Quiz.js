@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Quiz.css";
 import ViewQuiz from "./ViewQuiz";
 
@@ -14,7 +14,7 @@ const Quiz = (props) => {
     setOpenModal(false);
   };
   const handleAttemptQuiz = (item) => {
-    navigate(`/Quiz/${item.permalinks}`);
+    navigate(`/Quiz/${item.permalinks}`, { state: { item } });
   };
   const handleCopyLink = (item) => {
     let url = `http://localhost:3000/Quiz/${item.permalinks}`;

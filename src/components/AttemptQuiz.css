@@ -18,7 +18,7 @@
   overflow: scroll;
 }
 .attemptQuizFooter {
-  width: 100%;
+  width: 99%;
   display: flex;
   justify-content: end;
   margin-top: 10px;
@@ -33,4 +33,10 @@
 
 .correctAnswer {
   background: #dedede;
+}
+
+.scoreStatement {
+  margin: auto;
+  font-size: 20px;
+  width: 50%;
 }

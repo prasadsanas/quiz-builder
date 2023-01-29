@@ -9,6 +9,7 @@ const Question = (props) => {
     questionType: "MCQ",
     answerOption: "",
     correctAnswer: "",
+    checkedOptions: [],
   });
 
   useEffect(() => {

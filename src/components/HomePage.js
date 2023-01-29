@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
 import CreateQuiz from "./CreateQuiz";
@@ -8,7 +8,7 @@ import Quiz from "./Quiz";
 const HomePage = () => {
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, getAllQuiz } = useAuth();
   const handleOpenModal = () => {
     setOpenModal(true);
   };
@@ -24,44 +24,53 @@ const HomePage = () => {
     }
   };
 
-  const quizList = [
-    {
-      title: "1st quiz",
-      permalinks: "AQSWDE",
-      questions: [
-        {
-          question: "How are you?",
-          questionType: "MCQ",
-          answerOption: ["Good", "Bad", "Okay"],
-          correctAnswer: ["Good"],
-        },
-        {
-          question: "Where do you visited?",
-          questionType: "Multiple",
-          answerOption: ["Mumbai", "Pune", "Goa"],
-          correctAnswer: ["Mumbai", "Pune"],
-        },
-      ],
-    },
-    {
-      title: "2nd quiz",
-      permalinks: "EDRFTG",
-      questions: [
-        {
-          question: "How are you?",
-          questionType: "Multiple",
-          answerOption: ["Good", "Bad", "Okay", "Sad"],
-          correctAnswer: ["Good", "Okay"],
-        },
-        {
-          question: "Where do you visited?",
-          questionType: "Multiple",
-          answerOption: ["Mumbai", "Pune", "Goa"],
-          correctAnswer: ["Mumbai", "Pune"],
-        },
-      ],
-    },
-  ];
+  const [quizList, setQuizList] = useState([]);
+  useEffect(() => {
+    async function getQuiz() {
+      let list = await getAllQuiz();
+      setQuizList(list);
+    }
+    getQuiz();
+  }, [openModal]);
+
+  // const quizList = [
+  //   {
+  //     title: "1st quiz",
+  //     permalinks: "AQSWDE",
+  //     questions: [
+  //       {
+  //         question: "How are you?",
+  //         questionType: "MCQ",
+  //         answerOption: ["Good", "Bad", "Okay"],
+  //         correctAnswer: ["Good"],
+  //       },
+  //       {
+  //         question: "Where do you visited?",
+  //         questionType: "Multiple",
+  //         answerOption: ["Mumbai", "Pune", "Goa"],
+  //         correctAnswer: ["Mumbai", "Pune"],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     title: "2nd quiz",
+  //     permalinks: "EDRFTG",
+  //     questions: [
+  //       {
+  //         question: "How are you?",
+  //         questionType: "Multiple",
+  //         answerOption: ["Good", "Bad", "Okay", "Sad"],
+  //         correctAnswer: ["Good", "Okay"],
+  //       },
+  //       {
+  //         question: "Where do you visited?",
+  //         questionType: "Multiple",
+  //         answerOption: ["Mumbai", "Pune", "Goa"],
+  //         correctAnswer: ["Mumbai", "Pune"],
+  //       },
+  //     ],
+  //   },
+  // ];
   return (
     <div id="home">
       <div className="homeLeft">

@@ -1,5 +1,5 @@
 import { Modal, Box, Button, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "./contexts/AuthContext";
 import "./CreateQuiz.css";
 import Question from "./Question";
@@ -21,7 +21,7 @@ const CreateQuiz = (props) => {
   const [questionObject, setQuestionObject] = useState([]);
   const [count, setCount] = useState(1);
   const [disabledPublishBtn, setDisabledPublishBtn] = useState(true);
-  const { saveQuiz } = useAuth();
+  const { saveQuiz, getAllQuiz } = useAuth();
   const [quizDetails, setQuizDetails] = useState({
     title: "",
     questions: [],
@@ -32,6 +32,7 @@ const CreateQuiz = (props) => {
     await saveQuiz(payload);
     setNoOfQuestion([{ id: 1 }]);
     setCount(1);
+    getAllQuiz();
     props.onClose();
     setQuizDetails({
       permalinks: "",
@@ -55,7 +56,6 @@ const CreateQuiz = (props) => {
     });
     setDisabledPublishBtn(false);
   };
-  console.log(quizDetails);
   const handleAddQuestion = () => {
     setQuizDetails({
       ...quizDetails,
