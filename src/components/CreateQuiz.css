@@ -18,10 +18,9 @@
 .publishBtn {
   height: 50px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 25%;
-  margin-left: 75%;
+  gap: 20px;
+  align-items: end;
+  align-self: flex-end;
 }
 
 .addQuestionDiv {

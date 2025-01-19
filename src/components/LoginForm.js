@@ -1,13 +1,14 @@
 import { Button, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
 import "./Form.css";
 
-const LoginForm = () => {
+const LoginForm = ({ setShowLoginComponent }) => {
   const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
   const handleEmailChange = (event) => {
@@ -22,14 +23,15 @@ const LoginForm = () => {
     try {
       await login(email, password);
       navigate("/Dashboard");
-    } catch {
-      console.log("Failed to Login");
+    } catch (error) {
+      setError(error.message);
     }
   };
 
   return (
     <div id="loginForm">
-      <h3>Login to Create Quiz</h3>
+      <h1>Login to Create Quiz</h1>
+      {error && <p className="errorText">{error}</p>}
       <TextField
         className="inputField"
         label="Email Id"
@@ -51,7 +53,8 @@ const LoginForm = () => {
         Login
       </Button>
       <Typography>
-        Don't have an account? <Link to="/Signup">Register</Link>
+        Don't have an account?{" "}
+        <span onClick={() => setShowLoginComponent(false)}>Register</span>
       </Typography>
     </div>
   );
